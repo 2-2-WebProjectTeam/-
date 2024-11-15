@@ -13,6 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>로그인 처리</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
 			} else if(result == 0) {
 				script.println("<script>");
 				script.println("alert('회원가입이 완료되었습니다');");
-				script.println("history.back();");
+				script.println("location.href = 'login.jsp'");
 				script.println("</script>");
 			}
 		}

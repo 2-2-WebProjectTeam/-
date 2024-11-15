@@ -1,21 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하단바</title>
 <style>
     .navbar {
         position: fixed;
-        bottom: 20px; /* 화면 하단에서 20px 위로 */
+        bottom: 0; /* Positioned at the bottom */
         left: 0;
         width: 100%;
-        height: 100px; /* 네비게이션 바 높이 */
+        height: 60px; /* Reduced navbar height */
         background-color: #fff;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단 그림자 */
-        z-index: 1000; /* 다른 요소 위에 표시 */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
         font-family: Arial, sans-serif;
-        font-size: 14px;
+        font-size: 12px; /* Reduced font size */
         color: #aaa;
     }
 
@@ -29,27 +33,30 @@
     }
 
     .navbar-item img {
-        width: 30px; /* 아이콘 크기 */
-        height: 30px;
-        margin-bottom: 5px; /* 아이콘과 텍스트 간격 */
+        width: 24px; /* Reduced icon size */
+        height: 24px;
+        margin-bottom: 3px; /* Reduced spacing between icon and text */
     }
 
     .navbar-item:hover {
-        color: #333; /* 텍스트 호버 색상 변경 */
+        color: #333; /* Hover text color */
     }
 </style>
-
+</head>
+<body>
 <div class="navbar">
-    <a class="navbar-item" href="chat.jsp">
-        <img src="./image/nav_chat.png" alt="채팅">
+    <a class="navbar-item" href="<%= request.getContextPath() %>/mypage/mypage.jsp">
+        <img src="<%= request.getContextPath() %>/image/nav_chat.png" alt="채팅">
         채팅
     </a>
-    <a class="navbar-item" href="main.jsp">
-        <img src="./image/nav_home.png" alt="홈">
+    <a class="navbar-item" href="<%= request.getContextPath() %>/main.jsp">
+        <img src="<%= request.getContextPath() %>/image/nav_home.png" alt="홈">
         홈
     </a>
-    <a class="navbar-item" href="my.jsp">
-        <img src="./image/nav_my.png" alt="마이">
+    <a class="navbar-item" href="<%= request.getContextPath() %>/mypage/mypage.jsp">
+        <img src="<%= request.getContextPath() %>/image/nav_my.png" alt="마이">
         마이
     </a>
 </div>
+</body>
+</html>
