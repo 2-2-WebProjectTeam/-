@@ -30,9 +30,11 @@
 
     .profile-image {
         position: relative;
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
+        margin-top: 15px;
         margin-bottom: 10px;
+        margin-right: 10px;
     }
 
     .notification {
@@ -51,19 +53,29 @@
         font-weight: bold;
     }
 
+    .profile {
+        width:80%;
+        align-items: center;
+        display: flex;
+        margin-bottom: 10px;
+    }
     .profile-info {
-        text-align: center;
-        cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+    	text-align: left;
+    	display: flex; flex-direction: column;
+    	align-items: center;
     }
 
     .profile-info h2 {
         font-size: 20px;
-        margin: 5px 0;
+        margin-top: 30px;
+        margin-bottom: 5px;
+        cursor: pointer;
     }
 
     .profile-info .points {
         color: #ffae42;
         font-size: 14px;
+        margin-top : 0px;
     }
 
     .profile-links {
@@ -98,10 +110,14 @@
 <body>
 
 <div class="profile-container">
-    <img src="<%= request.getContextPath() %>/image/circle.png" class="profile.image">
-    <div class="profile-info" onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">
-        <h2>로그인</h2>
-        <p class="points">0 point</p>
+    
+    <div class="profile" >
+    	<img src="<%= request.getContextPath() %>/image/Group.png" class="profile-image">
+    	<div class="profile-info">
+    		<h2 onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">로그인</h2>
+        	<p class="points">0 point</p>
+    	</div>
+        
     </div>
     <div class="profile-links">
         <span class="profile-link" onclick="toggleActive(this)">내가 신청한 일</span>
