@@ -35,7 +35,7 @@
       width: 60px; /* 크기를 조금 키웠습니다 */
       height: 60px;
       border-radius: 50%;
-      background-image: url('../image/profile.png');
+      background-image: url('./image/profile.png');
       background-size: cover;
       background-position: center;
       margin-right: 20px; /* 사진과 이름 사이에 여백 추가 */
@@ -106,21 +106,34 @@
   </style>
 </head>
 <body>
+<script>
+	function switchTab(selectedTab) {
+		  // 모든 탭에서 active 클래스를 제거
+		  const tabs = document.querySelectorAll('.tab');
+		  tabs.forEach(tab => tab.classList.remove('active'));
+	
+		  // 클릭된 탭에 active 클래스 추가
+		  document.getElementById(selectedTab).classList.add('active');
+		}
+</script>
 
   <div class="container"> 
     <div class="header">
       <div class="profile-info">
         <div class="profile-pic"></div>
         <div class="profile-details">
-          <div>홍길동 님</div>
+          <div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">홍길동 님</div>
           <div class="points">10000 point</div>
         </div>
       </div>
     </div>
 
     <div class="tabs">
-      <div class="tab">내가 신청한 일</div>
-      <div class="tab active">내가 등록한 일</div>
+      <div class="tab" id="tab1" onclick="switchTab('tab1')">내가 신청한 일</div>
+      <div class="tab active" id="tab2" onclick="switchTab('tab2')">내가 등록한 일</div>
+      <div class="tab-container">
+</div>
+      
     </div>
 
     <div class="content">
@@ -138,6 +151,5 @@
       </div>
     </div>
   </div>
-  <jsp:include page="../navigation.jsp"/>
 </body>
 </html>
