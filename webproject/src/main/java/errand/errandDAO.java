@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 public class errandDAO {
 	private Connection conn;
 	private ResultSet rs;
@@ -14,7 +15,7 @@ public class errandDAO {
 		try {
 			String dbURL = "jdbc:mysql://localhost/erranddb";
 			String dbID = "root";
-			String dbPassword = "jsw2023112575*";
+			String dbPassword = "simmin0418#";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}catch(Exception e)
@@ -55,15 +56,15 @@ public class errandDAO {
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			
-			pstmt.setString(1,  errandTopic);
-			pstmt.setString(2,  errandDeadLine);
-			pstmt.setString(3,  errandPlace);
-			pstmt.setString(4,  errandFee);
-			pstmt.setString(5,  errandType);
-			pstmt.setString(6,  userID);
-			pstmt.setString(7,  getDate());
-			pstmt.setString(8,  errandContent);
-			pstmt.setInt(9,  getNext());
+			pstmt.setInt(1,  getNext());
+			pstmt.setString(2,  userID);
+			pstmt.setString(3,  getDate());
+			pstmt.setString(4,  errandTopic);
+			pstmt.setString(5,  errandDeadLine);
+			pstmt.setString(6,  errandPlace);
+			pstmt.setString(7,  errandFee);
+			pstmt.setString(8,  errandType);
+			pstmt.setString(9,  errandContent);
 			pstmt.setInt(10,  1);
 			return pstmt.executeUpdate();
 			

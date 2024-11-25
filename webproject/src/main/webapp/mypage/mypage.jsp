@@ -106,6 +106,13 @@
   </style>
 </head>
 <body>
+<%
+	String userID = null;
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String) session.getAttribute("userID");
+	}
+%>
 <script>
 	function switchTab(selectedTab) {
 		  // 모든 탭에서 active 클래스를 제거
@@ -122,8 +129,18 @@
       <div class="profile-info">
         <div class="profile-pic"></div>
         <div class="profile-details">
-          <div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">홍길동 님</div>
-          <div class="points">10000 point</div>
+        <% 
+        	if(userID == null) {
+        %>
+        	<div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">로그인</div>
+        <%
+        	} else {
+        %>
+        	<div><%= userID %></div> 
+        <%
+        	}
+        %>
+          <div class="points">0 point</div>
         </div>
       </div>
     </div>
