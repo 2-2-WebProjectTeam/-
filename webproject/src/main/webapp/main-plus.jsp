@@ -19,6 +19,7 @@
          top: 20px; /* 이미지의 상단 여백 */
          left: 20px; /* 이미지의 왼쪽 여백 */
          cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+         z-index: 100;
        }
        .title {
          font-size: 42px;

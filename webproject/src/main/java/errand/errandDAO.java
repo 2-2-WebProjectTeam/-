@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 public class errandDAO {
 	private Connection conn;
 	private ResultSet rs;
@@ -14,8 +15,9 @@ public class errandDAO {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/infor?serverTimezone=UTC";
 			String dbID = "root";
-			String dbPassword = "0000";
+			String dbPassword = "simmin0418#";
 			Class.forName("com.mysql.cj.jdbc.Driver");
+
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}catch(Exception e)
 		{

@@ -103,9 +103,28 @@
       color: #ff7e00;
       font-weight: bold;
     }
+    .logout {
+      position : absolute;
+      left : 80%;
+      border: 1px solid red;
+      border-radius: 8px;
+      background-color : red;
+      padding : 3px;
+      font-size : 14px;
+      font-weight: bold;
+      color: white; 
+      
+    }
   </style>
 </head>
 <body>
+<%
+	String userID = null;
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String) session.getAttribute("userID");
+	}
+%>
 <script>
 	function switchTab(selectedTab) {
 		  // 모든 탭에서 active 클래스를 제거
@@ -122,34 +141,52 @@
       <div class="profile-info">
         <div class="profile-pic"></div>
         <div class="profile-details">
-          <div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">홍길동 님</div>
-          <div class="points">10000 point</div>
+        <% 
+        	if(userID == null) {
+        %>
+        	<div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">로그인</div>
+        	<div class="points">0 point</div>
+        <%
+        	} else {
+        %>
+        	<div class=logout onclick="window.location.href='<%= request.getContextPath() %>/login/logoutAction.jsp'">logout</div>
+        	<div><%= userID %></div>
+        	<div class="points">10000 point</div> 
+        <%
+        	}
+        %>
         </div>
       </div>
     </div>
-
+    
     <div class="tabs">
       <div class="tab" id="tab1" onclick="switchTab('tab1')">내가 신청한 일</div>
       <div class="tab active" id="tab2" onclick="switchTab('tab2')">내가 등록한 일</div>
-      <div class="tab-container">
-</div>
-      
-    </div>
-
-    <div class="content">
-      <div class="task">
-        <div class="task-title">벌레좀 잡아주세요 ㅠㅠ</div>
-        <div class="task-details">기한: 9/5 (목) 22:00</div>
-        <div class="task-details">장소: 동대문구 5단거리 자취방</div>
-        <div class="points">5000 point</div>
-      </div>
-      <div class="task">
-        <div class="task-title">후문 메가커피에서 아아 좀 사다주세요</div>
-        <div class="task-details">기한: 9/4 (수) 14:45</div>
-        <div class="task-details">장소: 학술관 K357</div>
-        <div class="points">4000 point</div>
-      </div>
-    </div>
+      <div class="tab-container"></div>
+  	</div>
+  		<% 
+        	if(userID != null) {
+        %>
+	    <div class="content">
+	    	<div class="task">
+	        	<div class="task-title">벌레좀 잡아주세요 ㅠㅠ</div>
+	        	<div class="task-details">기한: 9/5 (목) 22:00</div>
+	        	<div class="task-details">장소: 동대문구 5단거리 자취방</div>
+	        	<div class="points">5000 point</div>
+	      	</div>
+	   		<div class="task">
+	        	<div class="task-title">후문 메가커피에서 아아 좀 사다주세요</div>
+	        	<div class="task-details">기한: 9/4 (수) 14:45</div>
+	        	<div class="task-details">장소: 학술관 K357</div>
+	        	<div class="points">4000 point</div>
+	      	</div>
+	    </div>
+        <%
+        	}
+        %>
+  <jsp:include page="../navigation.jsp"/>  
   </div>
+  
+
 </body>
 </html>

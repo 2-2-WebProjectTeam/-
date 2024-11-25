@@ -83,6 +83,13 @@
             height: 0;
         }
     </style>
+    <%
+	String userID = null;
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String) session.getAttribute("userID");
+	}
+	%>
     <script>
         function selectCategory(element) { 
             const buttons = document.querySelectorAll('.category-button');
@@ -95,9 +102,18 @@
             buttons.forEach(button => button.classList.remove('selected'));
             element.classList.add('selected');
         }
+        function gotoPage() {
+        	const userID = "<%= userID %>";
+        	if(userID != null)
+        		{
+        		location.href='main-plus.jsp';
+        		}
+        	
+        }
     </script>
 </head>
 <body>
+
     <div class="category-container">
         <div class="category-button selected" onclick="selectCategory(this)">전체</div>
         <div class="category-button" onclick="selectCategory(this)">물품 대여</div>
@@ -113,9 +129,9 @@
         <div class="sorting-button" onclick="selectSorting(this)">포인트순</div>
         <div class="sorting-button" onclick="selectSorting(this)">마감순</div>
     </div>
-    <img class="plus" src="./image/plus.png" onclick="location.href='main-plus.jsp';">
+    <img class="plus" src="./image/plus.png" onclick="gotoPage();">
     <jsp:include page="navigation.jsp"/>
-
+    
 </body>
 </html>
 
