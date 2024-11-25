@@ -45,7 +45,7 @@
 </head>
 <body>
 <div class="navbar">
-    <a class="navbar-item" href="<%= request.getContextPath() %>/mypage/mypage.jsp">
+    <a class="navbar-item" href="<%= request.getContextPath() %>/chatting.jsp">
         <img src="<%= request.getContextPath() %>/image/nav_chat.png" alt="채팅">
         채팅
     </a>

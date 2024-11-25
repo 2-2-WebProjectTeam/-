@@ -13,10 +13,11 @@ public class errandDAO {
 	public errandDAO()
 	{
 		try {
-			String dbURL = "jdbc:mysql://localhost/erranddb";
+			String dbURL = "jdbc:mysql://localhost:3306/infor?serverTimezone=UTC";
 			String dbID = "root";
 			String dbPassword = "simmin0418#";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}catch(Exception e)
 		{
@@ -51,7 +52,7 @@ public class errandDAO {
 		return -1;	//데이터베이스 오류
 	}
 	
-	public int write(String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String errandType, String userID, String errandContent) {
+	public int write(String userID, String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String errandType, String errandContent) {
 		String SQL="INSERT INTO errand VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
