@@ -15,7 +15,7 @@ public class errandDAO {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/infor?serverTimezone=UTC";
 			String dbID = "root";
-			String dbPassword = "simmin0418#";
+			String dbPassword = "chlalstjr04A";
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
