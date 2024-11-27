@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>main-plus</title>
     <style>
-        
         .title-container {
          width: 100%;
          max-width: 1000px;
@@ -155,6 +155,12 @@
                 <tr>
                     <td><input type="text" name="errandFee" class="input-field"></td>
                 </tr>
+				<tr>
+				    <td>채팅링크</td>
+				</tr>
+				<tr>
+				    <td><input type="text" name="chattingLink" class="input-field"></td>
+				</tr>
                 <tr>
                     <td>
                         <div class="category-container">

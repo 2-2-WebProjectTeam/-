@@ -2,14 +2,16 @@ package errand;
 
 public class Errand {
 	private int errandID;
-	private String userID;
+	private String enrollID;
 	private String enrollDate;
 	private String errandTopic;
 	private String errandDeadLine;
 	private String errandPlace;
 	private String errandFee;
+	private String chattingLink;
 	private String errandType;
 	private String errandContent;
+	private String appliedID;	
 	private int errandAvailable;
 	
 	public int getErrandID() {
@@ -19,11 +21,11 @@ public class Errand {
 		this.errandID = errandID;
 	}
 
-	public String getUserID() {
-		return userID;
+	public String getEnrollID() {
+		return enrollID;
 	}
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setEnrollID(String enrollID) {
+		this.enrollID = enrollID;
 	}
 	public String getEnrollDate() {
 		return enrollDate;
@@ -56,6 +58,13 @@ public class Errand {
 	public void setErrandFee(String errandFee) {
 		this.errandFee = errandFee;
 	}
+	
+	public String getChattingLink() {
+		return chattingLink;
+	}
+	public void setChattingLink(String chattingLink) {
+		this.chattingLink = chattingLink;
+	}
 	public String getErrandType() {
 		return errandType;
 	}
@@ -67,6 +76,12 @@ public class Errand {
 	}
 	public void setErrandContent(String errandContent) {
 		this.errandContent = errandContent;
+	}
+	public String getAppliedID() {
+		return appliedID;
+	}
+	public void setAppliedID(String appliedID) {
+		this.appliedID = appliedID;
 	}
 	public int getErrandAvailable() {
 		return errandAvailable;
