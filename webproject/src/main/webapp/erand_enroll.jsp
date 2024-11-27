@@ -81,13 +81,22 @@
         .submit-button:hover {
             background-color: #ff9800;
         }
+        .arrow {
+         position: fixed;
+         top: 20px;
+         left: 20px;
+         cursor: pointer;
+         width: 30px;
+         height: 30px; 
+         z-index: 100;
+      }
 
 
     </style>
 </head>
 <body>
     <div class="title-container">
-        <img src="./image/arrow.back.png" onclick="history.back()">
+        <img src="./image/arrow.back.png" class="arrow" onclick="history.back()">
     </div>
     <h1>프린트 5장 해주세요</h1>
     <h7>단순서비스</h7>

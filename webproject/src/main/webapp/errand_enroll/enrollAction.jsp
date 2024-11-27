@@ -20,7 +20,8 @@
 	<%
 			
 		String userID="정선우";
-		
+
+
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}

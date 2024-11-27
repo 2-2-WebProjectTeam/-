@@ -11,7 +11,7 @@
 		session.invalidate();
 	%>
 	<script>
-		location.href = 'main.jsp';
+		location.href = "<%= request.getContextPath() %>/main.jsp";
 	</script>
 </body>
 </html>
