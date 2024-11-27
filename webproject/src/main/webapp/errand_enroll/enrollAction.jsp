@@ -46,7 +46,7 @@
 					else
 					{
 						errandDAO ErrandDAO = new errandDAO();
-						int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getErrandType(), errand.getErrandContent());
+						int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getChattingLink(), errand.getErrandType(), errand.getErrandContent());
 
 						if(result == -1) {
 							PrintWriter script=response.getWriter();
