@@ -80,7 +80,7 @@
 		<div class="text">회원가입</div>
 	</div>
 	<div class="container_form">
-		<form>
+		<form method="post" action="joinAction.jsp">
 			<div class="form-group">아이디</div>
 	       	<div class="form-group">
 	       		<input type="text" class="form-control" name="userID">

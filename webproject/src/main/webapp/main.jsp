@@ -106,7 +106,7 @@
         	const userID = "<%= userID %>";
         	if(userID != null)
         		{
-        		location.href='main-plus.jsp';
+        		location.href='errand_enroll/errand_enroll.jsp';
         		}
         	
         }

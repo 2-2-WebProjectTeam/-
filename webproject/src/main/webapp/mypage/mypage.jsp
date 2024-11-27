@@ -35,7 +35,7 @@
       width: 60px; /* 크기를 조금 키웠습니다 */
       height: 60px;
       border-radius: 50%;
-      background-image: url('./image/profile.png');
+      background-image: url('<%= request.getContextPath() %>/image/profile.png');
       background-size: cover;
       background-position: center;
       margin-right: 20px; /* 사진과 이름 사이에 여백 추가 */
