@@ -168,7 +168,7 @@
         <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
         <div class="points">:<%= list.get(i).getErrandFee() %></div>
         <div class="task-details"><%= list.get(i).getEnrollDate().substring(0,11)+list.get(i).getEnrollDate().substring(11,13)+"시"+list.get(i).getEnrollDate().substring(14,16)+"분"%></div>
-     </a> </div> 
+     </a></div> 
    <%
 		}
 	%>
