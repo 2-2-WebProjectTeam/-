@@ -5,6 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main-plus</title>
     <style>
         .title-container {
@@ -15,13 +16,15 @@
          padding-top: 20px; /* 상단 여백 */
        }
        .title-container img {
-         position: absolute;
-         top: 20px; /* 이미지의 상단 여백 */
-         left: 20px; /* 이미지의 왼쪽 여백 */
-         cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+         position: fixed;
+         top: 20px;
+         left: 20px;
+         cursor: pointer;
+         width: 30px;
+         height: 30px;
        }
        .title {
-         font-size: 42px;
+         font-size: 24px;
          font-weight: 900;
          text-align: center;
          position: relative;
@@ -32,10 +35,20 @@
         .input-field {
             width: 100%;
             /* padding: 15px; */
-            margin: 100px 0;
+            margin: 20px 0;
             border: none;
             border-bottom: 2px solid #ddd;
-            font-size: 50px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .input-field-place {
+            width: 85%;
+            /* padding: 15px; */
+            margin: 20px 0;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            font-size: 14px;
             outline: none;
         }
         /* 카테고리 버튼 스타일 */
@@ -47,11 +60,11 @@
             margin: 15px 0;
         }
         .category-button {
-            width: 180px; /* 버튼 너비 증가 */
-            padding: 20px 0px; /* 버튼 내부 여백 증가 */
+            width: 80px; /* 버튼 너비 증가 */
+            padding: 10px 0px; /* 버튼 내부 여백 증가 */
             border: 2px solid #ddd;
             border-radius: 35px;
-            font-size: 25px; /* 글자 크기 증가 */
+            font-size: 12px; /* 글자 크기 증가 */
             color: #333;
             cursor: pointer; /* 마우스 오버 시 포인터 커서 이미지*/
             text-align: center;
@@ -61,12 +74,12 @@
             background-color: #eee;
         }
         .submit-button {
-            width: 580px;
-            padding: 20px;
+            width: 200px;
+            padding: 10px;
             border: none;
             border-radius: 20px;
             background-color: #fde7cd;
-            font-size: 40px;
+            font-size: 20px;
             cursor: pointer;
             color : #F7A239;
             margin-top : 20px;
@@ -77,19 +90,17 @@
         /* fieldset 스타일 */
         fieldset {
             border: 2px solid #ddd; /* 테두리 색상 */
-            border-radius: 70px; /* 둥근 모서리 */
+            border-radius: 30px; /* 둥근 모서리 */
             padding: 30px;
-            margin : 82px;
-            font-size:30px;
+            margin : 20px;
+            margin-top : 50px;
+            font-size:15px;
             color : #424242
             
         } 
         .map-icon {
-            position: absolute;
-            right: 150px; /* 오른쪽 끝으로 배치 */
-            top: 980px;
-            width: 50px; /* 아이콘 너비 */
-            height: 50px; /* 아이콘 높이 */
+            width: 30px; /* 아이콘 너비 */
+            height: 30px; /* 아이콘 높이 */
             cursor: pointer; /* 클릭 가능한 느낌 */
         }
         /* 선택된 버튼 스타일 */
@@ -123,7 +134,7 @@
 </head>
 <body>
     <div class="title-container">
-        <img src="/arrow.back.png" onclick="history.back()"> 
+        <img src="<%= request.getContextPath() %>/image/arrow.back.png" onclick="history.back()"> 
         <div class="title">심부름 등록</div>
     </div>
 
@@ -146,8 +157,8 @@
                     <td>장소</td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="errandPlace" class="input-field">
-                    <img src="/map_icon.png"alt="지도 아이콘" class="map-icon" onclick="openMapOverlay()" ></td><tr>
+                    <td><input type="text" name="errandPlace" class="input-field-place">
+                    <img src="<%= request.getContextPath() %>/image/map_icon.png"alt="지도 아이콘" class="map-icon" onclick="openMapOverlay()" ></td><tr>
                 </tr>
                 <tr>
                     <td>활동비</td>
@@ -155,12 +166,12 @@
                 <tr>
                     <td><input type="text" name="errandFee" class="input-field"></td>
                 </tr>
-				<tr>
-				    <td>채팅링크</td>
-				</tr>
-				<tr>
-				    <td><input type="text" name="chattingLink" class="input-field"></td>
-				</tr>
+                <tr>
+                    <td>오픈채팅 링크</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="chattingLink" class="input-field"></td>
+                </tr>
                 <tr>
                     <td>
                         <div class="category-container">
@@ -177,7 +188,7 @@
                     <td>요청 내용</td>
                 </tr>
                 <tr>
-                    <td><textarea name="errandContent" rows="8%" style="width: 100%; padding: 0px; font-size: 30px; border: 2px solid #ddd; border-radius: 5px;"></textarea></td>
+                    <td><textarea name="errandContent" rows="6%" style="width: 100%; padding: 0px; font-size: 14px; border: 2px solid #ddd; border-radius: 5px;"></textarea></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;" ><input type="submit" value="등록하기" class="submit-button" ></td>
@@ -186,12 +197,12 @@
         </fieldset>
     </form>
     <!-- Overlay for the map -->
-    <div class="overlay" id="mapOverlay" style="display: none; position: absolute; top: 25%; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);">
-    <div style="position: relative; width: 80%; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; top: 50px;">
-        <img src="/arrow.back.png" alt="닫기 버튼" style="position: absolute; top: 10px; cursor: pointer;" onclick="closeMapOverlay()">
-        <img src="/dongguk.map.png" alt="지도 이미지" style="width: 100%; height: auto; margin-top: 50px;">
-        <input type="text" id="detailAddress" class="address-input" placeholder="상세 주소를 입력하세요" style="width: 100%; padding: 10px; margin-top: 20px; font-size: 20px; border: 1px solid #ddd; border-radius: 5px;">
-        <button type="button" style="margin-top: 20px; padding: 10px 20px; font-size: 20px; background-color: #ff9800; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="setPlace()">저장</button>
+    <div class="overlay" id="mapOverlay" style="display: none; position: absolute; top: 0%; left: 0; width: 100%; height: 150%; background: rgba(0, 0, 0, 0.5);">
+    <div style="position: relative; width: 80%; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; top: 200px;">
+        <img src="<%= request.getContextPath() %>/image/arrow.back.png" alt="닫기 버튼" style="position: absolute; top: 10px;left : 10px; cursor: pointer; width : 30px; height : 30px;" onclick="closeMapOverlay()">
+        <img src="<%= request.getContextPath() %>/image/dongguk.map.png" alt="지도 이미지" style="width: 100%; height: auto; margin-top: 20px;">
+        <input type="text" id="detailAddress" class="address-input" placeholder="상세 주소를 입력하세요" style="width: 95%; padding: 10px; margin-top: 20px; font-size: 14px; border: 1px solid #ddd; border-radius: 5px;">
+        <button type="button" style="margin-top: 20px; padding: 7px 15px; font-size: 14px; background-color: #ff9800; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="setPlace()">저장</button>
     </div>
     </div>
 
@@ -219,8 +230,9 @@
         }
         // Function to set the detailed address into the place input field
 		function setPlace() {
+			console.log("setPlace 함수가 호출되었습니다.");
     		const detailAddress = document.getElementById('detailAddress').value; // Get the value of the detail address
-    		const placeInput = document.querySelector('input[name="place"]'); // Select the place input field
+    		const placeInput = document.querySelector('input[name="errandPlace"]'); // Select the place input field
 
 		    if (detailAddress.trim() !== "") {
         		placeInput.value = detailAddress; // Set the value of the place field
