@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="errand.errandDAO" %>
+<%@ page import="errand.Errand" %>
+<%@ page import="java.util.ArrayList" %>
+<jsp:useBean id="errand" class="errand.Errand" scope="page" />
 <!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,11 +111,11 @@
     .logout {
       position : absolute;
       left : 80%;
-      border: 1px solid red;
+      border: 1px solid #ff7e00;
       border-radius: 8px;
-      background-color : red;
-      padding : 3px;
-      font-size : 14px;
+      background-color : #ff7e00;
+      padding : 4px 7px;
+      font-size : 12px;
       font-weight: bold;
       color: white; 
       
@@ -133,6 +138,9 @@
 	
 		  // 클릭된 탭에 active 클래스 추가
 		  document.getElementById(selectedTab).classList.add('active');
+		  <%
+		    boolean isActive = true;
+		%>
 		}
 </script>
 
@@ -149,7 +157,7 @@
         <%
         	} else {
         %>
-        	<div class=logout onclick="window.location.href='<%= request.getContextPath() %>/login/logoutAction.jsp'">logout</div>
+        	<div class=logout onclick="window.location.href='<%= request.getContextPath() %>/login/logoutAction.jsp'">로그아웃</div>
         	<div><%= userID %></div>
         	<div class="points">10000 point</div> 
         <%
@@ -164,29 +172,38 @@
       <div class="tab active" id="tab2" onclick="switchTab('tab2')">내가 등록한 일</div>
       <div class="tab-container"></div>
   	</div>
-  		<% 
-        	if(userID != null) {
-        %>
-	    <div class="content">
-	    	<div class="task">
-	        	<div class="task-title">벌레좀 잡아주세요 ㅠㅠ</div>
-	        	<div class="task-details">기한: 9/5 (목) 22:00</div>
-	        	<div class="task-details">장소: 동대문구 5단거리 자취방</div>
-	        	<div class="points">5000 point</div>
-	      	</div>
-	   		<div class="task">
-	        	<div class="task-title">후문 메가커피에서 아아 좀 사다주세요</div>
-	        	<div class="task-details">기한: 9/4 (수) 14:45</div>
-	        	<div class="task-details">장소: 학술관 K357</div>
-	        	<div class="points">4000 point</div>
-	      	</div>
-	    </div>
-        <%
-        	}
-        %>
+  	<%
+  	if (tab2.classList.contains('active')){
+  	if(userID != null) {
+		errandDAO errandDAO=new errandDAO();
+		ArrayList<Errand> list = errandDAO.getList();
+	%>
+	<div class="content">
+	<%
+		for(int i =0;i<list.size(); i++){
+			if(userID.equals(list.get(i).getEnrollID())) {
+	%>
+	<div class="task" onclick="location.href='errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
+        <div class="task-title"><%= list.get(i).getErrandTopic() %></div>
+        <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
+        <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
+        <div class="points"><%= list.get(i).getErrandFee() %> point</div>
+    </div>
+    <%
+			}
+		}
+	%>
+	</div>
+	
+	<br>
+	<br>
+	<br>
+	<%
+  	}
+	%>
+	
+    
+  </div>		
   <jsp:include page="../navigation.jsp"/>  
-  </div>
-  
-
 </body>
 </html>

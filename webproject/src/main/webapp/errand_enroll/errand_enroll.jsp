@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main-plus</title>
     <style>
-        
         .title-container {
          width: 100%;
          max-width: 1000px;
@@ -188,7 +188,7 @@
                     <td>요청 내용</td>
                 </tr>
                 <tr>
-                    <td><textarea name="errandContent" rows="6%" style="width: 100%; padding: 0px; font-size: 30px; border: 2px solid #ddd; border-radius: 5px;"></textarea></td>
+                    <td><textarea name="errandContent" rows="6%" style="width: 100%; padding: 0px; font-size: 14px; border: 2px solid #ddd; border-radius: 5px;"></textarea></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;" ><input type="submit" value="등록하기" class="submit-button" ></td>

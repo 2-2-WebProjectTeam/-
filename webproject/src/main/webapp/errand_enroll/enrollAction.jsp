@@ -18,10 +18,7 @@
 </head>
 <body>
 	<%
-			
-		String userID="정선우";
-
-
+		String userID = null;
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}
@@ -47,7 +44,7 @@
 					else
 					{
 						errandDAO ErrandDAO = new errandDAO();
-						int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getErrandType(), errand.getErrandContent());
+						int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getChattingLink(), errand.getErrandType(), errand.getErrandContent());
 
 						if(result == -1) {
 							PrintWriter script=response.getWriter();
@@ -58,7 +55,7 @@
 						} else {
 							PrintWriter script=response.getWriter();
 							script.println("<script>");
-							script.println("location.href='errand_enroll.jsp'");
+							script.println("location.href='" + request.getContextPath() + "/main.jsp';");
 							script.println("</script>");
 						}
 					}
