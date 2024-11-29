@@ -13,7 +13,7 @@
     	for(int i =0;i<list.size(); i++){
 			if(userID.equals(list.get(i).getEnrollID())) {
 %>
-    <div class="task" onclick="location.href='errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
+    <div class="task" onclick="location.href='<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
         <div class="task-title"><%= list.get(i).getErrandTopic() %></div>
         <div class="task-details">기한: <%= list.get(i).getErrandDeadLine() %></div>
         <div class="task-details">장소: <%= list.get(i).getErrandPlace() %></div>
@@ -26,7 +26,7 @@
     	for(int i =0;i<list.size(); i++){
 			if(userID.equals(list.get(i).getAppliedID())) {
 %>
-    <div class="task" onclick="location.href='errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
+    <div class="task" onclick="location.href='<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
         <div class="task-title"><%= list.get(i).getErrandTopic() %></div>
         <div class="task-details">기한: <%= list.get(i).getErrandDeadLine() %></div>
         <div class="task-details">장소: <%= list.get(i).getErrandPlace() %></div>
