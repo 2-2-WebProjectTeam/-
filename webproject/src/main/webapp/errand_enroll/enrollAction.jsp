@@ -27,39 +27,38 @@
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인을 하세요.')");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='../login/login.jsp'");
 			script.println("</script>");	
 		}else{
 			
 			if(errand.getErrandTopic() == null || errand.getErrandDeadLine() == null || 
 					errand.getErrandPlace() == null || errand.getErrandFee() == null ||
 					errand.getErrandType() == null || errand.getErrandContent() == null)
-					{	
-						PrintWriter script=response.getWriter();
-						script.println("<script>");
-						script.println("alert('입력이 안 된 사항이 있습니다');");
-						script.println("history.back();");
-						script.println("</script>");
-					}
-					else
-					{
-						errandDAO ErrandDAO = new errandDAO();
-						int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getChattingLink(), errand.getErrandType(), errand.getErrandContent());
+			{	
+				PrintWriter script=response.getWriter();
+				script.println("<script>");
+				script.println("alert('입력이 안 된 사항이 있습니다');");
+				script.println("history.back();");
+				script.println("</script>");
+			}
+			else
+			{
+				errandDAO ErrandDAO = new errandDAO();
+				int result = ErrandDAO.write(userID, errand.getErrandTopic(), errand.getErrandDeadLine(), errand.getErrandPlace(), errand.getErrandFee(), errand.getChattingLink(), errand.getErrandType(), errand.getErrandContent());
 
-						if(result == -1) {
-							PrintWriter script=response.getWriter();
-							script.println("<script>");
-							script.println("alert('글쓰기에 실패했습니다.')");
-							script.println("history.back();");
-							script.println("</script>");
-						} else {
-							PrintWriter script=response.getWriter();
-							script.println("<script>");
-							script.println("location.href='" + request.getContextPath() + "/main.jsp';");
-							script.println("</script>");
-						}
-					}
-			
+				if(result == -1) {
+					PrintWriter script=response.getWriter();
+					script.println("<script>");
+					script.println("alert('글쓰기에 실패했습니다.')");
+					script.println("history.back();");
+					script.println("</script>");
+				} else {
+					PrintWriter script=response.getWriter();
+					script.println("<script>");
+					script.println("location.href='" + request.getContextPath() + "/main.jsp';");
+					script.println("</script>");
+				}
+			}	
 		}
 	%>
 </body>
