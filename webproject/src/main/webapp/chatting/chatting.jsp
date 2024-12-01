@@ -9,6 +9,17 @@
     <meta charset="UTF-8">
     <title>메시지 목록</title>
     <style>
+    	.title {
+	    text-align: center;
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    background-color: white; 
+	    z-index: 1000; 
+	    padding: 10px;
+	    margin : 10px 0px 10px;
+}	
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -36,6 +47,7 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            margin-left: 10px;
         }
 
         .message-title {
@@ -43,6 +55,7 @@
             font-weight: bold;
             margin-bottom: 10px;
             text-align: left;
+            margin-left :-40px;
         }
 
         .message-meta {
@@ -50,6 +63,8 @@
             font-size: 13px;
             margin-bottom: 10px;
             text-align: left;
+            padding-left : 10px;
+			margin-left : -50px;
         }
 
         tr {
@@ -102,12 +117,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
         }
 
         .message {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #333333; /* 진한 글자 색상 */
         }
@@ -120,7 +135,7 @@
             justify-content: center;
             align-items: center;
             color: #f37d0e; /* 오렌지색 텍스트 */
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -146,26 +161,31 @@
     </script>
 </head>
 <body>
+<h3 class="title">채팅</h3>
     <div class="message-container">
         <table>
             <%
                 // 세션에서 userID 가져오기
                 String userID = (String) session.getAttribute("userID");
-                if (userID == null || userID.isEmpty()) {
-                    out.println("<tr><td colspan='2'>로그인이 필요합니다.</td></tr>");
-                } else {
+            if (userID == null || userID.isEmpty()) {
+                out.println("<script>alert('로그인이 필요합니다.');</script>");
+            }
+ else {
                     errandDAO dao = new errandDAO();
                     List<Errand> errands = dao.getErrandsWithChatCondition(userID);
 
                     for (Errand errand : errands) {
             %>
             <tr class="message" onclick="showChattingLink('<%= errand.getChattingLink() != null ? errand.getChattingLink() : '#' %>')">
-                <td><img src="../image/profit.png" alt="프로필 이미지"></td>
-                <td>
-                    <div class="message-title"><%= errand.getErrandTopic() %></div>
-                    <div class="message-meta"><%= errand.getErrandType() %></div>
-                </td>
-            </tr>
+    <td><img src="../image/profit.png" alt="프로필 이미지"></td>
+    <td>
+        <div class="message-title"><%= errand.getErrandTopic() %></div>
+        <div class="message-meta"><%= errand.getErrandType() %>
+        /     신청자: <%= errand.getEnrollID() != null ? errand.getEnrollID() : "없음" %>
+		수락자: <%= errand.getAppliedID() != null ? errand.getAppliedID() : "없음" %>
+    </td>
+</tr>
+
             <%
                     }
                 }
