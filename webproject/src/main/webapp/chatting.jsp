@@ -2,6 +2,7 @@
 <%@ page import="chatting.chattingDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="chatting.chatting" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -56,10 +57,15 @@
     <div class="message-container">
         <table>
             <%
-                chattingDAO dao = new chattingDAO();
-                List<chatting> errands = dao.getErrandsWithChatCondition();
+                // 세션에서 userID 가져오기
+                String userID = (String) session.getAttribute("userID");
+                if (userID == null || userID.isEmpty()) {
+                    out.println("<tr><td colspan='2'>로그인이 필요합니다.</td></tr>");
+                } else {
+                    chattingDAO dao = new chattingDAO();
+                    List<chatting> errands = dao.getErrandsWithChatCondition(userID);
 
-                for (chatting errand : errands) {
+                    for (chatting errand : errands) {
             %>
             <tr class="message">
                 <td><img src="./image/profit.png" alt="프로필 이미지"></td>
@@ -69,6 +75,7 @@
                 </td>
             </tr>
             <%
+                    }
                 }
             %>
         </table>

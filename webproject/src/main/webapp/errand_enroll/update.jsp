@@ -6,12 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
-<head>
-    
+<head>  
 </head>
 <body>
 <%
-	String userID = "정선우";
+	String userID = session.getAttribute("userID");
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String) session.getAttribute("userID");
