@@ -50,6 +50,11 @@
       flex-direction: column;
       gap: 8px; /* 이름과 포인트 사이에 간격 추가 */
     }
+    
+    .name {
+    font-size : 18px;
+    font-weight: bold;
+    }
 
     .points {
       font-size: 14px;
@@ -161,13 +166,13 @@
         <% 
         	if(userID == null) {
         %>
-        	<div onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">로그인</div>
+        	<div class="name"onclick="window.location.href='<%= request.getContextPath() %>/login/login.jsp'">로그인</div>
         	<div class="points">0 point</div>
         <%
         	} else {
         %>
         	<div class=logout onclick="window.location.href='<%= request.getContextPath() %>/login/logoutAction.jsp'">로그아웃</div>
-        	<div><%= userID %></div>
+        	<div class="name"><%= userID %> 님</div>
         	<div class="points">10000 point</div> 
         <%
         	}
