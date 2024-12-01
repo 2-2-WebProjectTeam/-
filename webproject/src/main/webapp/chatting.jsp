@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="chatting.chattingDAO" %>
+<%@ page import="errand.errandDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="chatting.chatting" %>
+<%@ page import="errand.Errand" %>
 <%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -62,19 +62,26 @@
                 if (userID == null || userID.isEmpty()) {
                     out.println("<tr><td colspan='2'>로그인이 필요합니다.</td></tr>");
                 } else {
-                    chattingDAO dao = new chattingDAO();
-                    List<chatting> errands = dao.getErrandsWithChatCondition(userID);
+                    // errandDAO를 사용하여 메서드 호출
+                    errandDAO dao = new errandDAO();
+                    List<Errand> errands = dao.getErrandsWithChatCondition(userID);
 
-                    for (chatting errand : errands) {
+                    if (errands.isEmpty()) {
+                        out.println("<tr><td colspan='2'>진행 중인 심부름이 없습니다.</td></tr>");
+                    } else {
+                        for (Errand errand : errands) {
             %>
             <tr class="message">
                 <td><img src="./image/profit.png" alt="프로필 이미지"></td>
                 <td>
                     <div class="message-title"><%= errand.getErrandTopic() %></div>
                     <div class="message-meta"><%= errand.getErrandType() %></div>
+                    <div class="message-meta">신청자: <%= errand.getAppliedID() != null ? errand.getAppliedID() : "없음" %></div>
+                    <div class="message-meta">등록자: <%= errand.getEnrollID() %></div>
                 </td>
             </tr>
             <%
+                        }
                     }
                 }
             %>
