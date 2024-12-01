@@ -3,7 +3,6 @@
 <%@ page import="errand.errandDAO" %>
 <%@ page import="errand.Errand" %>
 <%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="errand" class="errand.Errand" scope="page" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -129,19 +128,29 @@
 	{
 		userID = (String) session.getAttribute("userID");
 	}
+	boolean enrollActive = true;
 %>
 <script>
-	function switchTab(selectedTab) {
-		  // 모든 탭에서 active 클래스를 제거
-		  const tabs = document.querySelectorAll('.tab');
-		  tabs.forEach(tab => tab.classList.remove('active'));
 	
-		  // 클릭된 탭에 active 클래스 추가
-		  document.getElementById(selectedTab).classList.add('active');
-		  <%
-		    boolean isActive = true;
-		%>
-		}
+	function switchTab(selectedTab) {
+	    // 모든 탭에서 active 클래스를 제거
+	    const tabs = document.querySelectorAll('.tab');
+	    tabs.forEach(tab => tab.classList.remove('active'));
+	
+	    // 클릭된 탭에 active 클래스 추가
+	    const activeTab = document.getElementById(selectedTab);
+	    activeTab.classList.add('active');
+	    // Ajax 요청 보내기
+	    fetch(`mypageGeterrand.jsp?tab=` + String(selectedTab))
+	    
+	        .then(response => response.text())
+	        .then(html => {
+	            document.querySelector('.content').innerHTML = html; // 서버에서 받은 데이터를 렌더링
+	        })
+	        .catch(err => console.error('Error:', err));
+	}
+
+		
 </script>
 
   <div class="container"> 
@@ -172,37 +181,14 @@
       <div class="tab active" id="tab2" onclick="switchTab('tab2')">내가 등록한 일</div>
       <div class="tab-container"></div>
   	</div>
-  	<%
-  	if(userID != null) {
-		errandDAO errandDAO=new errandDAO();
-		ArrayList<Errand> list = errandDAO.getList();
-	%>
 	<div class="content">
-	<%
-		for(int i =0;i<list.size(); i++){
-			if(userID.equals(list.get(i).getEnrollID())) {
-	%>
-	<div class="task" onclick="location.href='errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
-        <div class="task-title"><%= list.get(i).getErrandTopic() %></div>
-        <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
-        <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
-        <div class="points"><%= list.get(i).getErrandFee() %> point</div>
-    </div>
-    <%
-			}
-		}
-	%>
-	</div>
-	
-	<br>
-	<br>
-	<br>
-	<%
-  	}
-	%>
-	
-    
-  </div>		
+		<script>
+	        document.addEventListener('DOMContentLoaded', () => {
+	            switchTab('tab2');
+	        });
+	    </script>
+  </div>
+  </div>
   <jsp:include page="../navigation.jsp"/>  
 </body>
 </html>
