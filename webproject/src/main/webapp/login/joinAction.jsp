@@ -41,7 +41,7 @@
 				script.println("alert('이미 존재하는 아이디 입니다');");
 				script.println("history.back();");
 				script.println("</script>");
-			} else if(result == 0) {
+			} else {
 				script.println("<script>");
 				script.println("alert('회원가입이 완료되었습니다');");
 				script.println("location.href = 'login.jsp'");

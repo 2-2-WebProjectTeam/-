@@ -132,7 +132,7 @@
         	const userID = "<%= userID %>";
         	if(userID != null)
         		{
-        		location.href='main-plus.jsp';
+        		location.href='errand_enroll/errand_enroll.jsp';
         		}
         	
         }
@@ -163,7 +163,7 @@
 		for(int i =0;i<list.size(); i++){
 	%>
 	<div class="task"><a href="<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>">
-        <div class="task-title"><%= list.get(i).getErrandTopic() %></div>
+        <div class="task-title"><%= list.get(i).getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
         <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
         <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
         <div class="points">:<%= list.get(i).getErrandFee() %></div>

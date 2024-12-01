@@ -133,4 +133,25 @@ public class errandDAO {
 		}
 		return null;
 	}
+	
+	public int update(int errandID, String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String chattingLink, String errandType, String errandContent) {
+		String SQL="UPDATE errand SET errandTopic = ?, errandDeadLine = ?, errandPlace = ?, errandFee = ?, chattiingLink = ?, errandType = ?, errandContent = ? WHERE errandID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setString(1,  errandTopic);
+			pstmt.setString(2,  errandDeadLine);
+			pstmt.setString(3,  errandPlace);
+			pstmt.setString(4,  errandFee);
+			pstmt.setString(5,  chattingLink);
+			pstmt.setString(6,  errandType);
+			pstmt.setString(7,  errandContent);
+			pstmt.setInt(8,  errandID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 }

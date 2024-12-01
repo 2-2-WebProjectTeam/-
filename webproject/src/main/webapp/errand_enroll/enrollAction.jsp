@@ -18,10 +18,7 @@
 </head>
 <body>
 	<%
-			
-		String userID="정선우";
-
-
+		String userID = null;
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}
@@ -58,7 +55,7 @@
 						} else {
 							PrintWriter script=response.getWriter();
 							script.println("<script>");
-							script.println("location.href='errand_enroll.jsp'");
+							script.println("location.href='" + request.getContextPath() + "/main.jsp';");
 							script.println("</script>");
 						}
 					}
