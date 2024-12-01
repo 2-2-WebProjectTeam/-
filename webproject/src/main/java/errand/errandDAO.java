@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class errandDAO {
@@ -105,7 +107,47 @@ public class errandDAO {
 			e.printStackTrace();
 		}
 		return list;
+	
 	}
+	public List<Errand> getErrandsWithChatCondition(String userID) {
+        List<Errand> errands = new ArrayList<>();
+        String query = "SELECT e.errandID, e.errandTopic, e.errandContent, e.appliedID, e.enrollID " +
+                       "FROM errand e " +
+                       "WHERE (e.enrollID = ? AND e.appliedID IS NOT NULL) " +  
+                       "OR (e.appliedID = ?) " + 
+                       "ORDER BY e.errandID";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, userID); 
+            pstmt.setString(2, userID); 
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Errand errand = new Errand();
+                    errand.setErrandID(rs.getInt("errandID"));
+                    errand.setErrandTopic(rs.getString("errandTopic"));
+                    errand.setErrandContent(rs.getString("errandContent"));
+                    errand.setAppliedID(rs.getString("appliedID"));
+                    errand.setEnrollID(rs.getString("enrollID"));
+
+                    String errandContent = rs.getString("errandContent");
+                    if (errandContent.contains("서비스")) {
+                        errand.setErrandType("단순 서비스");
+                    } else if (errandContent.contains("배달")) {
+                        errand.setErrandType("배달");
+                    } else {
+                        errand.setErrandType("기타");
+                    }
+
+                    errands.add(errand);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return errands;
+    }
 	public Errand getErrand(int errandID) {
 		String SQL="SELECT * FROM errand WHERE errandID=?";
 		try {
