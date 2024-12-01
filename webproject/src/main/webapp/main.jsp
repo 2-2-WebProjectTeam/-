@@ -85,6 +85,29 @@
             width: 100%;
             height: 0;
         }
+        .task {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .task-details {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    a{
+    color:#000000;
+    text-decoration:none;
+    }
     </style>
     <%
 	String userID = null;
@@ -139,15 +162,16 @@
 		ArrayList<Errand> list = errandDAO.getList();
 		for(int i =0;i<list.size(); i++){
 	%>
-	<div class="task">
-        <div class="task-title"><a href="errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>"><%= list.get(i).getErrandTopic() %></div>
+	<div class="task"><a href="<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>">
+        <div class="task-title"><%= list.get(i).getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
         <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
         <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
         <div class="points">:<%= list.get(i).getErrandFee() %></div>
+        <div class="task-details"><%= list.get(i).getEnrollDate().substring(0,11)+list.get(i).getEnrollDate().substring(11,13)+"시"+list.get(i).getEnrollDate().substring(14,16)+"분"%></div>
+     </a></div> 
    <%
 		}
 	%>
-      </div>
 </body>
 </html>
 

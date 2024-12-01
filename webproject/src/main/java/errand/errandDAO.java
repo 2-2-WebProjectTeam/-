@@ -106,4 +106,52 @@ public class errandDAO {
 		}
 		return list;
 	}
+	public Errand getErrand(int errandID) {
+		String SQL="SELECT * FROM errand WHERE errandID=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, errandID);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				Errand errand=new Errand();
+				errand.setErrandID(rs.getInt(1));
+				errand.setEnrollID(rs.getString(2));
+				errand.setEnrollDate(rs.getString(3));
+				errand.setErrandTopic(rs.getString(4));
+				errand.setErrandDeadLine(rs.getString(5));
+				errand.setErrandPlace(rs.getString(6));
+				errand.setErrandFee(rs.getString(7));
+				errand.setChattingLink(rs.getString(8));
+				errand.setErrandType(rs.getString(9));
+				errand.setErrandContent(rs.getString(10));
+				errand.setAppliedID(rs.getString(11));
+				errand.setErrandAvailable(rs.getInt(12));
+				return errand;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public int update(int errandID, String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String chattingLink, String errandType, String errandContent) {
+		String SQL="UPDATE errand SET errandTopic = ?, errandDeadLine = ?, errandPlace = ?, errandFee = ?, chattiingLink = ?, errandType = ?, errandContent = ? WHERE errandID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setString(1,  errandTopic);
+			pstmt.setString(2,  errandDeadLine);
+			pstmt.setString(3,  errandPlace);
+			pstmt.setString(4,  errandFee);
+			pstmt.setString(5,  chattingLink);
+			pstmt.setString(6,  errandType);
+			pstmt.setString(7,  errandContent);
+			pstmt.setInt(8,  errandID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 }

@@ -1,8 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="errand.Errand" %>
+<%@ page import="errand.errandDAO" %>
+<%@ page import="java.io.PrintWriter" %>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>erand_enroll</title>
+    <title>erand_show</title>
     <style>
         .title-container {
             width: 100%;
@@ -73,28 +80,66 @@
             margin-right: auto; 
             text-align:center;
         }
+        .sub-button {
+            width: 200px;
+            padding: 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #fde7cd;
+            font-size: 40px;
+            cursor: pointer;
+            color : #F7A239;
+            margin-top : 400px;
+            display : block;
+            margin-left: auto; 
+            margin-right: auto; 
+            text-align:center;
+        }
         .submit-button:hover {
             background-color: #ff9800;
         }
-
+		a{
+		text-decoration:none;
+		}
 
     </style>
 </head>
 <body>
+<%
+	String userID = "정선우";
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String) session.getAttribute("userID");
+	}
+	int errandID=0;
+	if(request.getParameter("errandID")!=null){
+		errandID=Integer.parseInt(request.getParameter("errandID"));
+	}
+	if(errandID==0){
+		PrintWriter script=response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글입니다.')");
+		script.println("location.href='main.jsp'");
+		script.println("</script>");	
+	}
+	Errand errand=new errandDAO().getErrand(errandID);
+%>
+    <jsp:include page="../navigation.jsp"/>
+	
     <div class="title-container">
         <img src="/arrow.back.png" onclick="history.back()">
     </div>
-    <h1>프린트 5장 해주세요</h1>
-    <h7>단순서비스</h7>
+    <h1><%=errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></h1>
+    <h7><%=errand.getErrandType() %></h7>
     <div class="explanation">
         <div class="explanation-item">
-            <img class="icon" src="/time.png">기한 : 9/4 (수) 10:00
+            <img class="icon" src="/time.png">기한 : <%=errand.getErrandDeadLine() %>
         </div>
         <div class="explanation-item">
-            <img class="icon" src="/place.png">장소 : 신공학관 3106
+            <img class="icon" src="/place.png">장소 : <%=errand.getErrandPlace() %>
         </div>
         <div class="explanation-item">
-            <img class="icon" src="/point.png">활동비 : 2000 point
+            <img class="icon" src="/point.png">활동비 : <%=errand.getErrandFee() %>
         </div>
     </div>
     <div class="place">
@@ -104,8 +149,21 @@
     <hr style=width:800px;>
     <div class="detail">
         <h6>요청 내용</h6>
-        <div class="content">지금 당장 받는게 힘들것같아 프린트 이후 3106 앞 사물함에 넣어주시면 좋을것같습니다. 뽑을 내용은 채팅으로 보내드릴게요.</div>
+        <div class="content"><%=errand.getErrandContent().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
     </div>
-    <input type="submit" value="등록하기" class="submit-button" >
+    <%
+    	if(userID!=null&&userID.equals(errand.getEnrollID())){
+    %>
+    	<div class="container">
+	    	<a href="update.jsp?errandID=<%=errandID%>" class = "sub-button">수정</a>
+	    	<a href="deleteACTION.jsp?errandID=<%=errandID%>" class = "sub-button">삭제</a>
+	    </div>
+   	<%
+   		}else{
+   	%>
+    	<input type="submit" value="신청하기" class="submit-button" >
+   	<%
+   		}
+   	%>
 </body>
 </html>

@@ -186,7 +186,6 @@
       <div class="tab active" id="tab2" onclick="switchTab('tab2')">내가 등록한 일</div>
       <div class="tab-container"></div>
   	</div>
-  	
 	<div class="content">
 		<script>
 	        document.addEventListener('DOMContentLoaded', () => {
