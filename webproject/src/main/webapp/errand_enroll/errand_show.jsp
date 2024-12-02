@@ -163,7 +163,7 @@
 	    	<a href="deleteAction.jsp?errandID=<%=errandID%>" class = "sub-button">삭제</a>
 	    </div>
    	<%
-   		}else{
+   		}else if(userID != null){
    	%>
    		<form method="post" action="errand_apply.jsp">
    			<input type="hidden" name="userID" value="<%= userID %>">
