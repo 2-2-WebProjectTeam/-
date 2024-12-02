@@ -6,11 +6,138 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
-<head>  
+<head> 
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main-plus</title>
+    <style>
+        .title-container {
+         width: 100%;
+         max-width: 1000px;
+         position: relative;
+         margin: 0 auto;
+         padding-top: 20px; /* 상단 여백 */
+       }
+       .title-container img {
+         position: fixed;
+         top: 20px;
+         left: 20px;
+         cursor: pointer;
+         width: 30px;
+         height: 30px;
+       }
+       .title {
+         font-size: 24px;
+         font-weight: 900;
+         text-align: center;
+         position: relative;
+         top: 20px; /* 텍스트의 상단 여백 */
+         transform: translateY(0);
+       }
+       
+        .input-field {
+            width: 100%;
+            /* padding: 15px; */
+            margin: 20px 0;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .input-field-place {
+            width: 85%;
+            /* padding: 15px; */
+            margin: 20px 0;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            font-size: 14px;
+            outline: none;
+        }
+        /* 카테고리 버튼 스타일 */
+        .category-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .category-button {
+            width: 80px; /* 버튼 너비 증가 */
+            padding: 10px 0px; /* 버튼 내부 여백 증가 */
+            border: 2px solid #ddd;
+            border-radius: 35px;
+            font-size: 12px; /* 글자 크기 증가 */
+            color: #333;
+            cursor: pointer; /* 마우스 오버 시 포인터 커서 이미지*/
+            text-align: center;
+            margin : 5px;
+        }
+        .category-button:hover {
+            background-color: #eee;
+        }
+        .submit-button {
+            width: 200px;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #fde7cd;
+            font-size: 20px;
+            cursor: pointer;
+            color : #F7A239;
+            margin-top : 20px;
+        }
+        .submit-button:hover {
+            background-color: #ff9800;
+        }
+        /* fieldset 스타일 */
+        fieldset {
+            border: 2px solid #ddd; /* 테두리 색상 */
+            border-radius: 30px; /* 둥근 모서리 */
+            padding: 30px;
+            margin : 20px;
+            margin-top : 50px;
+            font-size:15px;
+            color : #424242
+            
+        } 
+        .map-icon {
+            width: 30px; /* 아이콘 너비 */
+            height: 30px; /* 아이콘 높이 */
+            cursor: pointer; /* 클릭 가능한 느낌 */
+        }
+        /* 선택된 버튼 스타일 */
+        .selected {
+            background-color: #ffae42;
+            color: white;
+            border-color: #ffae42;
+        }
+
+        /* 박스 위에 올렸을 때 */
+        .category-button:hover {
+            background-color: #ffae42;
+            color : #f5f5f5;
+        }     
+    </style>
+    <script>
+        function selectCategory(element) { 
+            const buttons = document.querySelectorAll('.category-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function selectSorting(element) {
+            const buttons = document.querySelectorAll('.sorting-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        
+    </script> 
 </head>
 <body>
 <%
-	String userID = session.getAttribute("userID");
+	String userID = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String) session.getAttribute("userID");
@@ -47,7 +174,7 @@
         <div class="title">게시판 글 수정 양식</div>
     </div>
 
-    <form method="post" action="updateAction.jsp?errandID=<%=errandID%>">">
+    <form method="post" action="updateAction.jsp?errandID=<%=errandID%>">
         <fieldset class="form">
             <table style="width: 100%;">
                 <tr>
