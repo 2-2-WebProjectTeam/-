@@ -70,7 +70,7 @@ public class errandDAO {
 			pstmt.setString(8,  chattingLink);
 			pstmt.setString(9,  errandType);
 			pstmt.setString(10,  errandContent);
-			pstmt.setString(11,  "");
+			pstmt.setString(11,  null);
 			pstmt.setInt(12,  1);
 			return pstmt.executeUpdate();
 			
@@ -189,6 +189,21 @@ public class errandDAO {
 			pstmt.setString(6,  errandType);
 			pstmt.setString(7,  errandContent);
 			pstmt.setInt(8,  errandID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
+	
+	public int addApplyID(int errandID, String appliedID) {
+		String SQL="UPDATE errand SET appliedID = ? WHERE errandID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setString(1,  appliedID);
+			pstmt.setInt(2,  errandID);
 			return pstmt.executeUpdate();
 			
 		}catch(Exception e) {

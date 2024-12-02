@@ -3,14 +3,14 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="errand.Errand" %>
 <%@ page import="errand.errandDAO" %>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
-<head>  
+<head> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 <body>
 <%
-	String userID = session.getAttribute("userID");
+	String userID = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String) session.getAttribute("userID");

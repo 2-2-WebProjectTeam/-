@@ -85,29 +85,31 @@
             width: 100%;
             height: 0;
         }
-        .task {
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    	.task {
+	      background-color: #fff;
+	      padding: 15px;
+	      margin-bottom: 15px;
+	      border-radius: 8px;
+	      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    	}
 
-    .task-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+    	.task-title {
+	      font-size: 16px;
+	      font-weight: bold;
+	      margin-bottom: 10px;
+   		}
 
-    .task-details {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-    a{
-    color:#000000;
-    text-decoration:none;
-    }
+    	.task-details {
+      	font-size: 14px;
+      	margin-bottom: 5px;
+    	}
+    	a{
+    	color:#000000;
+    	text-decoration:none;
+    	}
+    	.content {
+      	padding: 20px;
+    	}
     </style>
     <%
 	String userID = null;
@@ -136,42 +138,58 @@
         		}
         	
         }
+        function sortcategory(category, sort)
+        {
+        	fetch(`sortingcategory.jsp?category=` + String(category) + `sort=` + String(sort))
+    	    
+	        .then(response => response.text())
+	        .then(html => {
+	            document.querySelector('.content').innerHTML = html; // 서버에서 받은 데이터를 렌더링
+	        })
+	        .catch(err => console.error('Error:', err));
+        }
     </script>
 </head>
 <body>
-
     <div class="category-container">
-        <div class="category-button selected" onclick="selectCategory(this)">전체</div>
-        <div class="category-button" onclick="selectCategory(this)">물품 대여</div>
-        <div class="category-button" onclick="selectCategory(this)">배달</div>
-        <div class="break"></div> <!-- 줄 바꿈 추가 -->
-        <div class="category-button" onclick="selectCategory(this)">문서 작성</div>
-        <div class="category-button" onclick="selectCategory(this)">단순 서비스</div>
-        <div class="category-button" onclick="selectCategory(this)">기타</div>
+        <div class="category-button selected" onclick="selectCategory(this); sortcategory('전체','')">전체</div>
+        <div class="category-button" onclick="selectCategory(this); sortcategory('물품 대여','')">물품 대여</div>
+        <div class="category-button" onclick="selectCategory(this); sortcategory('배달','')">배달</div>
+        <div class="break"></div>
+        <div class="category-button" onclick="selectCategory(this); sortcategory('문서 작성','')">문서 작성</div>
+        <div class="category-button" onclick="selectCategory(this); sortcategory('단순 서비스','')">단순 서비스</div>
+        <div class="category-button" onclick="selectCategory(this); sortcategory('기타','')">기타</div>
     </div>
 
     <div class="sorting-container">
-        <div class="sorting-button" onclick="selectSorting(this)">최신순</div>
-        <div class="sorting-button" onclick="selectSorting(this)">포인트순</div>
-        <div class="sorting-button" onclick="selectSorting(this)">마감순</div>
+        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','최신순')">최신순</div>
+        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','포인트순')">포인트순</div>
+        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','마감순')">마감순</div>
     </div>
     <img class="plus" src="./image/plus.png" onclick="gotoPage();">
     <jsp:include page="navigation.jsp"/>
+    <div class = "content">
 	<%
 		errandDAO errandDAO=new errandDAO();
 		ArrayList<Errand> list = errandDAO.getList();
-		for(int i =0;i<list.size(); i++){
+		for(int i =list.size()-1;i>0; i--){
+			if(list.get(i).getAppliedID() == null) {
 	%>
-	<div class="task"><a href="<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>">
-        <div class="task-title"><%= list.get(i).getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
-        <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
-        <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
-        <div class="points">:<%= list.get(i).getErrandFee() %></div>
-        <div class="task-details"><%= list.get(i).getEnrollDate().substring(0,11)+list.get(i).getEnrollDate().substring(11,13)+"시"+list.get(i).getEnrollDate().substring(14,16)+"분"%></div>
-     </a></div> 
+		<div class="task"onclick="window.location.href='<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
+	        <div class="task-title"><%= list.get(i).getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
+	        <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
+	        <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
+	        <div class="task-details">활동비:<%= list.get(i).getErrandFee() %> point</div>
+	        <div class="task-details"><%= list.get(i).getEnrollDate().substring(0,11)+list.get(i).getEnrollDate().substring(11,13)+"시"+list.get(i).getEnrollDate().substring(14,16)+"분"%></div>
+	    </div> 
    <%
+			}
 		}
 	%>
+	</div>
+	<br>
+	<br>
+	<br>
 </body>
 </html>
 

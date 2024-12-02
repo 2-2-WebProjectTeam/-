@@ -3,11 +3,10 @@
 <%@ page import="errand.Errand" %>
 <%@ page import="errand.errandDAO" %>
 <%@ page import="java.io.PrintWriter" %>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>erand_show</title>
     <style>
@@ -106,7 +105,7 @@
 </head>
 <body>
 <%
-	String userID = "정선우";
+	String userID = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String) session.getAttribute("userID");
@@ -130,7 +129,7 @@
         <img src="/arrow.back.png" onclick="history.back()">
     </div>
     <h1><%=errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></h1>
-    <h7><%=errand.getErrandType() %></h7>
+    <h1><%=errand.getErrandType() %></h1>
     <div class="explanation">
         <div class="explanation-item">
             <img class="icon" src="/time.png">기한 : <%=errand.getErrandDeadLine() %>
@@ -143,7 +142,7 @@
         </div>
     </div>
     <div class="place">
-        <img class="map" src="/dongguk.map.png"></div>
+        <img class="map" src="/dongguk.map.png">
         <img src="/Vector.png">  <!--나중에 정보 받아와서 조정예정 -->
     </div>
     <hr style=width:800px;>
@@ -161,7 +160,12 @@
    	<%
    		}else{
    	%>
-    	<input type="submit" value="신청하기" class="submit-button" >
+   		<form method="post" action="errand_apply.jsp">
+   			<input type="hidden" name="userID" value="<%= userID %>">
+    		<input type="hidden" name="errandID" value="<%= errandID %>">
+   			<input type="submit" value="신청하기" class="submit-button" >
+   		</form>
+    	
    	<%
    		}
    	%>
