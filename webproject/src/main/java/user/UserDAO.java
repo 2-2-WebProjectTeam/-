@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import errand.Errand;
+
 public class UserDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -65,5 +67,20 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return -1;// 데이터베이스 오류
+	}
+	
+	public String getPassword(String userPhoneNumber) {
+		String SQL="SELECT userPassword FROM user WHERE userPhoneNumber=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userPhoneNumber);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString("userPassword");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

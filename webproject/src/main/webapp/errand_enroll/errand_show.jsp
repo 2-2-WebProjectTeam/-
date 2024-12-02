@@ -106,7 +106,7 @@
 </head>
 <body>
 <%
-	String userID = "정선우";
+	String userID = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String) session.getAttribute("userID");
@@ -156,7 +156,7 @@
     %>
     	<div class="container">
 	    	<a href="update.jsp?errandID=<%=errandID%>" class = "sub-button">수정</a>
-	    	<a href="deleteACTION.jsp?errandID=<%=errandID%>" class = "sub-button">삭제</a>
+	    	<a href="deleteAction.jsp?errandID=<%=errandID%>" class = "sub-button">삭제</a>
 	    </div>
    	<%
    		}else{

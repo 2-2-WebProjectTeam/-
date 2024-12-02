@@ -107,8 +107,60 @@ public class errandDAO {
 			e.printStackTrace();
 		}
 		return list;
-	
 	}
+	
+	public ArrayList<Errand> getListSorted(String category, String sort) { 
+	    ArrayList<Errand> list = new ArrayList<>();
+	    
+	    // 기본 SQL 템플릿
+	    String SQL = "SELECT * FROM errand WHERE errandAvailable = 1 AND appliedID =''";
+	    
+	    // 카테고리가 '전체'가 아닌 경우 조건 추가
+	    if (!"전체".equals(category)) {
+	        SQL += " AND errandType = ?";
+	    }
+
+	 // 정렬 조건 추가
+	    if ("최신순".equals(sort)) {
+	        SQL += " ORDER BY errandID DESC"; // 최신순 정렬
+	    } else if ("포인트순".equals(sort)) {
+	        SQL += " ORDER BY CAST(errandFee AS UNSIGNED) DESC"; // 포인트순 정렬
+	    } else {
+	        SQL += " ORDER BY errandID ASC"; // 기본 정렬 (오래된 순)
+	    }
+	    
+	    try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+
+	        // 카테고리가 '전체'가 아닌 경우 파라미터 설정
+	        if (!"전체".equals(category)) {
+	            pstmt.setString(1, category);
+	        }
+
+	        // SQL 실행
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            Errand errand = new Errand();
+	            errand.setErrandID(rs.getInt(1));
+	            errand.setEnrollID(rs.getString(2));
+	            errand.setEnrollDate(rs.getString(3));
+	            errand.setErrandTopic(rs.getString(4));
+	            errand.setErrandDeadLine(rs.getString(5));
+	            errand.setErrandPlace(rs.getString(6));
+	            errand.setErrandFee(rs.getString(7));
+	            errand.setChattingLink(rs.getString(8));
+	            errand.setErrandType(rs.getString(9));
+	            errand.setErrandContent(rs.getString(10));
+	            errand.setAppliedID(rs.getString(11));
+	            errand.setErrandAvailable(rs.getInt(12));
+	            list.add(errand);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	}
+	
 	public List<Errand> getErrandsWithChatCondition(String userID) {
         List<Errand> errands = new ArrayList<>();
         String query = "SELECT e.errandID, e.errandTopic, e.errandContent, e.appliedID, e.enrollID " +
@@ -177,7 +229,7 @@ public class errandDAO {
 	}
 	
 	public int update(int errandID, String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String chattingLink, String errandType, String errandContent) {
-		String SQL="UPDATE errand SET errandTopic = ?, errandDeadLine = ?, errandPlace = ?, errandFee = ?, chattiingLink = ?, errandType = ?, errandContent = ? WHERE errandID = ?";
+		String SQL="UPDATE errand SET errandTopic = ?, errandDeadLine = ?, errandPlace = ?, errandFee = ?, chattingLink = ?, errandType = ?, errandContent = ? WHERE errandID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			
@@ -196,4 +248,19 @@ public class errandDAO {
 		}
 		return -1;	//데이터베이스 오류
 	}
+	
+	public int delete(int errandID) {
+		String SQL="UPDATE errand SET errandAvailable = 0 WHERE errandID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setInt(1,  errandID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
+
 }
