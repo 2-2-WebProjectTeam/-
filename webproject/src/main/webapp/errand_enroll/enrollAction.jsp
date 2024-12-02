@@ -7,6 +7,7 @@
 <jsp:setProperty name="errand" property="errandDeadLine"/>
 <jsp:setProperty name="errand" property="errandPlace"/>
 <jsp:setProperty name="errand" property="errandFee"/>
+<jsp:setProperty name="errand" property="chattingLink"/>
 <jsp:setProperty name="errand" property="errandType"/>
 <jsp:setProperty name="errand" property="errandContent"/>
 
@@ -30,10 +31,9 @@
 			script.println("location.href='../login/login.jsp'");
 			script.println("</script>");	
 		}else{
-			
 			if(errand.getErrandTopic() == null || errand.getErrandDeadLine() == null || 
 					errand.getErrandPlace() == null || errand.getErrandFee() == null ||
-					errand.getErrandType() == null || errand.getErrandContent() == null)
+					errand.getChattingLink() == null ||errand.getErrandType() == null || errand.getErrandContent() == null)
 			{	
 				PrintWriter script=response.getWriter();
 				script.println("<script>");

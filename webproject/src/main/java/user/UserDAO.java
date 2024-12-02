@@ -86,12 +86,28 @@ public class UserDAO {
 				user.setUserGender(rs.getString(6));
 				user.setUserPoint(rs.getInt(7));
 				return user;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+	public String getPassword(String userPhoneNumber) {
+		String SQL="SELECT userPassword FROM user WHERE userPhoneNumber=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userPhoneNumber);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString("userPassword");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 	
 	public int addpoint(int point, String userID) {
 		String SQL="UPDATE user SET userPoint = ? WHERE userID = ?";
@@ -107,4 +123,5 @@ public class UserDAO {
 		}
 		return -1;	//데이터베이스 오류
 	}
+
 }

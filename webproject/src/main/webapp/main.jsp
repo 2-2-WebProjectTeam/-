@@ -111,85 +111,81 @@
       	padding: 20px;
     	}
     </style>
-    <%
-	String userID = null;
-	if(session.getAttribute("userID") != null)
-	{
-		userID = (String) session.getAttribute("userID");
-	}
-	%>
-    <script>
-        function selectCategory(element) { 
-            const buttons = document.querySelectorAll('.category-button');
-            buttons.forEach(button => button.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-
-        function selectSorting(element) {
-            const buttons = document.querySelectorAll('.sorting-button');
-            buttons.forEach(button => button.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-        function gotoPage() {
-        	const userID = "<%= userID %>";
-        	if(userID != null)
-        		{
-        		location.href='errand_enroll/errand_enroll.jsp';
-        		}
-        	
-        }
-        function sortcategory(category, sort)
-        {
-        	fetch(`sortingcategory.jsp?category=` + String(category) + `sort=` + String(sort))
-    	    
-	        .then(response => response.text())
-	        .then(html => {
-	            document.querySelector('.content').innerHTML = html; // 서버에서 받은 데이터를 렌더링
-	        })
-	        .catch(err => console.error('Error:', err));
-        }
-    </script>
 </head>
 <body>
+	<%
+	String userID = null;
+	   if(session.getAttribute("userID") != null)
+	   {
+	      userID = (String) session.getAttribute("userID");
+	   }
+
+	String category = request.getParameter("category");
+	if (category == null || category.isEmpty()) {
+	    category = "전체";
+	}
+
+	String sort = request.getParameter("sort");
+	if (sort == null || sort.isEmpty()) {
+	    sort = "최신순";
+	}
+        // 데이터베이스에서 리스트 조회
+        errandDAO errandDAO = new errandDAO();
+        ArrayList<Errand> list = errandDAO.getListSorted(category, sort);
+    %>
+
+    <!-- 카테고리 버튼 -->
     <div class="category-container">
-        <div class="category-button selected" onclick="selectCategory(this); sortcategory('전체','')">전체</div>
-        <div class="category-button" onclick="selectCategory(this); sortcategory('물품 대여','')">물품 대여</div>
-        <div class="category-button" onclick="selectCategory(this); sortcategory('배달','')">배달</div>
-        <div class="break"></div>
-        <div class="category-button" onclick="selectCategory(this); sortcategory('문서 작성','')">문서 작성</div>
-        <div class="category-button" onclick="selectCategory(this); sortcategory('단순 서비스','')">단순 서비스</div>
-        <div class="category-button" onclick="selectCategory(this); sortcategory('기타','')">기타</div>
+        <div class="category-button <%= category.equals("전체") ? "selected" : "" %>" onclick="updatePage('전체', '<%= sort %>')">전체</div>
+        <div class="category-button <%= category.equals("물품 대여") ? "selected" : "" %>" onclick="updatePage('물품 대여', '<%= sort %>')">물품 대여</div>
+        <div class="category-button <%= category.equals("배달") ? "selected" : "" %>" onclick="updatePage('배달', '<%= sort %>')">배달</div>
+        <div class="category-button <%= category.equals("문서 작성") ? "selected" : "" %>" onclick="updatePage('문서 작성', '<%= sort %>')">문서 작성</div>
+        <div class="category-button <%= category.equals("단순 서비스") ? "selected" : "" %>" onclick="updatePage('단순 서비스', '<%= sort %>')">단순 서비스</div>
+        <div class="category-button <%= category.equals("기타") ? "selected" : "" %>" onclick="updatePage('기타', '<%= sort %>')">기타</div>
     </div>
 
+    <!-- 정렬 버튼 -->
     <div class="sorting-container">
-        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','최신순')">최신순</div>
-        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','포인트순')">포인트순</div>
-        <div class="sorting-button" onclick="selectSorting(this); sortcategory('','마감순')">마감순</div>
+        <div class="sorting-button <%= sort.equals("최신순") ? "selected" : "" %>" onclick="updatePage('<%= category %>', '최신순')">최신순</div>
+        <div class="sorting-button <%= sort.equals("포인트순") ? "selected" : "" %>" onclick="updatePage('<%= category %>', '포인트순')">포인트순</div>
     </div>
-    <img class="plus" src="./image/plus.png" onclick="gotoPage();">
-    <jsp:include page="navigation.jsp"/>
-    <div class = "content">
-	<%
-		errandDAO errandDAO=new errandDAO();
-		ArrayList<Errand> list = errandDAO.getList();
-		for(int i =list.size()-1;i>0; i--){
-			if(list.get(i).getAppliedID() == null) {
-	%>
-		<div class="task"onclick="window.location.href='<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%=list.get(i).getErrandID()%>'">
-	        <div class="task-title"><%= list.get(i).getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
-	        <div class="task-details">기한:<%= list.get(i).getErrandDeadLine() %></div>
-	        <div class="task-details">장소:<%= list.get(i).getErrandPlace() %></div>
-	        <div class="task-details">활동비:<%= list.get(i).getErrandFee() %> point</div>
-	        <div class="task-details"><%= list.get(i).getEnrollDate().substring(0,11)+list.get(i).getEnrollDate().substring(11,13)+"시"+list.get(i).getEnrollDate().substring(14,16)+"분"%></div>
-	    </div> 
-   <%
-			}
-		}
-	%>
-	</div>
-	<br>
-	<br>
-	<br>
+
+    <!-- 업무 리스트 출력 -->
+    <%
+        if (list != null && !list.isEmpty()) {
+            for (Errand errand : list) {
+    %>
+    <div class="task">
+        <a href="<%= request.getContextPath() %>/errand_enroll/errand_show.jsp?errandID=<%= errand.getErrandID() %>">
+            <div class="task-title"><%= errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></div>
+            <div class="task-details">기한: <%= errand.getErrandDeadLine() %></div>
+            <div class="task-details">장소: <%= errand.getErrandPlace() %></div>
+            <div class="task-details">포인트: <%= errand.getErrandFee() %></div>
+            <div class="task-details">등록일: <%= errand.getEnrollDate().substring(0, 16).replace("T", " ") %></div>
+        </a>
+    </div>
+    <%
+            }
+        } 
+    %>
+    <br>
+  	<br>
+  	<br>
+    <script>
+    function updatePage(category, sort) {
+        // JavaScript에서만 encodeURIComponent를 사용하도록 수정
+        location.href = "main.jsp?category=" + encodeURIComponent(category) + "&sort=" + encodeURIComponent(sort);
+    }
+    function gotoPage() {
+        const userID = "<%= userID %>";
+        if(userID != null)
+           {
+           location.href='errand_enroll/errand_enroll.jsp';
+           }
+     }
+	</script>
+	<img class="plus" src="./image/plus.png" onclick="gotoPage();">
+	<jsp:include page="navigation.jsp"/>
 </body>
 </html>
 

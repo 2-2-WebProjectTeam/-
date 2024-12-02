@@ -210,6 +210,9 @@
 	    </script>
   </div>
   </div>
+  <br>
+  <br>
+  <br>
   <jsp:include page="../navigation.jsp"/>  
 </body>
 </html>
