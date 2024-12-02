@@ -38,7 +38,7 @@ public class errandDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "";	//데이터베이스 오류
+		return "";	
 	}
 	public int getNext() {
 		String SQL="SELECT errandID FROM errand ORDER BY errandID DESC";
@@ -48,11 +48,11 @@ public class errandDAO {
 			if(rs.next()) {
 				return rs.getInt(1)+1;
 			}
-			return 1;	//첫번째 게시물인 경우
+			return 1;	
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return -1;	//데이터베이스 오류
+		return -1;	
 	}
 	
 	public int write(String enrollID, String errandTopic, String errandDeadLine, String errandPlace, String errandFee, String chattingLink, String errandType, String errandContent) {
@@ -162,44 +162,47 @@ public class errandDAO {
 	}
 	
 	public List<Errand> getErrandsWithChatCondition(String userID) {
-        List<Errand> errands = new ArrayList<>();
-        String query = "SELECT e.errandID, e.errandTopic, e.errandContent, e.appliedID, e.enrollID " +
-                       "FROM errand e " +
-                       "WHERE (e.enrollID = ? AND e.appliedID IS NOT NULL) " +  
-                       "OR (e.appliedID = ?) " + 
-                       "ORDER BY e.errandID";
+	     List<Errand> errands = new ArrayList<>();
+	     String query = "SELECT e.errandID, e.errandTopic, e.errandContent, e.appliedID, e.enrollID, e.chattingLink " +
+	             "FROM errand e " +
+	             "WHERE ((e.enrollID = ? AND e.appliedID IS NOT NULL) " +  
+	             "OR (e.appliedID = ?)) " +
+	             "AND e.errandAvailable = 1 " +   
+	             "ORDER BY e.errandID";
 
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	     try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	         pstmt.setString(1, userID); 
+	         pstmt.setString(2, userID); 
 
-            pstmt.setString(1, userID); 
-            pstmt.setString(2, userID); 
+	         try (ResultSet rs = pstmt.executeQuery()) {
+	             while (rs.next()) {
+	                 Errand errand = new Errand();
+	                 errand.setErrandID(rs.getInt("errandID"));
+	                 errand.setErrandTopic(rs.getString("errandTopic"));
+	                 errand.setErrandContent(rs.getString("errandContent"));
+	                 errand.setAppliedID(rs.getString("appliedID"));
+	                 errand.setEnrollID(rs.getString("enrollID"));
+	                 errand.setChattingLink(rs.getString("chattingLink"));  // chattingLink 가져오기
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Errand errand = new Errand();
-                    errand.setErrandID(rs.getInt("errandID"));
-                    errand.setErrandTopic(rs.getString("errandTopic"));
-                    errand.setErrandContent(rs.getString("errandContent"));
-                    errand.setAppliedID(rs.getString("appliedID"));
-                    errand.setEnrollID(rs.getString("enrollID"));
+	                 String errandContent = rs.getString("errandContent");
+	                 if (errandContent.contains("서비스")) {
+	                     errand.setErrandType("단순 서비스");
+	                 } else if (errandContent.contains("배달")) {
+	                     errand.setErrandType("배달");
+	                 } else {
+	                     errand.setErrandType("기타");
+	                 }
 
-                    String errandContent = rs.getString("errandContent");
-                    if (errandContent.contains("서비스")) {
-                        errand.setErrandType("단순 서비스");
-                    } else if (errandContent.contains("배달")) {
-                        errand.setErrandType("배달");
-                    } else {
-                        errand.setErrandType("기타");
-                    }
+	                 errands.add(errand);
+	             }
+	         }
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+	     return errands;
+	 }
 
-                    errands.add(errand);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return errands;
-    }
+	
 	public Errand getErrand(int errandID) {
 		String SQL="SELECT * FROM errand WHERE errandID=?";
 		try {
