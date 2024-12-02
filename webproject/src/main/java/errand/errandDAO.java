@@ -70,7 +70,7 @@ public class errandDAO {
 			pstmt.setString(8,  chattingLink);
 			pstmt.setString(9,  errandType);
 			pstmt.setString(10,  errandContent);
-			pstmt.setString(11,  "");
+			pstmt.setString(11,  null);
 			pstmt.setInt(12,  1);
 			return pstmt.executeUpdate();
 			
@@ -113,7 +113,7 @@ public class errandDAO {
 	    ArrayList<Errand> list = new ArrayList<>();
 	    
 	    // 기본 SQL 템플릿
-	    String SQL = "SELECT * FROM errand WHERE errandAvailable = 1 AND appliedID =''";
+	    String SQL = "SELECT * FROM errand WHERE errandAvailable = 1 AND appliedID IS NULL";
 	    
 	    // 카테고리가 '전체'가 아닌 경우 조건 추가
 	    if (!"전체".equals(category)) {
