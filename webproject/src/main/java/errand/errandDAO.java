@@ -265,5 +265,19 @@ public class errandDAO {
 		}
 		return -1;	//데이터베이스 오류
 	}
+	public int addApplyID(int errandID, String appliedID) {
+		String SQL="UPDATE errand SET appliedID = ? WHERE errandID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setString(1,  appliedID);
+			pstmt.setInt(2,  errandID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 
 }

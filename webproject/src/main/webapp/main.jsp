@@ -85,29 +85,31 @@
             width: 100%;
             height: 0;
         }
-        .task {
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    	.task {
+	      background-color: #fff;
+	      padding: 15px;
+	      margin-bottom: 15px;
+	      border-radius: 8px;
+	      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    	}
 
-    .task-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+    	.task-title {
+	      font-size: 16px;
+	      font-weight: bold;
+	      margin-bottom: 10px;
+   		}
 
-    .task-details {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-    a{
-    color:#000000;
-    text-decoration:none;
-    }
+    	.task-details {
+      	font-size: 14px;
+      	margin-bottom: 5px;
+    	}
+    	a{
+    	color:#000000;
+    	text-decoration:none;
+    	}
+    	.content {
+      	padding: 20px;
+    	}
     </style>
 </head>
 <body>
@@ -166,7 +168,9 @@
             }
         } 
     %>
-    
+    <br>
+  	<br>
+  	<br>
     <script>
     function updatePage(category, sort) {
         // JavaScript에서만 encodeURIComponent를 사용하도록 수정

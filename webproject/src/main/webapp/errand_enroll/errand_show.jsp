@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>erand_show</title>
@@ -132,6 +133,7 @@
     <div class="title-container">
         <img style="width:45px; height:45px;" src="../image/arrow.back.png" onclick="history.back()">
     </div>
+
     <h4><%=errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></h4>
     <div class="type"><%=errand.getErrandType() %></div>
     <div class="explanation">
@@ -146,6 +148,7 @@
         </div>
     </div>
     <div class="place">
+
         <img class="map" src="../image/dongguk.map.png"></div><br>
     <hr style=width:360px;><br><br>
     <div class="detail">
@@ -162,7 +165,12 @@
    	<%
    		}else{
    	%>
-    	<input type="submit" value="신청하기" class="submit-button" >
+   		<form method="post" action="errand_apply.jsp">
+   			<input type="hidden" name="userID" value="<%= userID %>">
+    		<input type="hidden" name="errandID" value="<%= errandID %>">
+   			<input type="submit" value="신청하기" class="submit-button" >
+   		</form>
+    	
    	<%
    		}
    	%>
