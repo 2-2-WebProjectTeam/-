@@ -3,17 +3,15 @@
 <%@ page import="errand.Errand" %>
 <%@ page import="errand.errandDAO" %>
 <%@ page import="java.io.PrintWriter" %>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>erand_show</title>
     <style>
         .title-container {
             width: 100%;
-            max-width: 1000px;
             position: relative;
             margin: 0 auto;
             padding-top: 20px; /* 상단 여백 */
@@ -24,61 +22,66 @@
             left: 20px; /* 이미지의 왼쪽 여백 */
             cursor: pointer; /* 클릭 가능하도록 커서 변경 */
         }
-        h1 {
-            padding: 150px 60px 0px;
-            font-size: 50px;
+        h4 {
+            padding: 40px 40px 0px;
+            font-size: 25px;
         }
-        h7 {
-            padding: 0px 60px;
-            font-size: 30px;
+        .type {
+            padding: 0px 40px;
+            font-size: 15px;
+            color : #ff9800;
+            font-weight : bold;
+            margin-top: -25px; /* 조금 더 위로 올리기 */
         }
         .explanation {
-            padding: 100px 60px;
+            padding: 50px 40px;
         }
         .explanation-item {
-            margin-bottom: 50px; /* 각 항목 간의 간격 조정 */
-            font-size: 30px;
+            margin-bottom: 20px; /* 각 항목 간의 간격 조정 */
+            font-size: 17px;
         }
         .icon {
-            margin-right: 50px; /* 아이콘과 텍스트 간의 간격 */
+            margin-right: 20px; /* 아이콘과 텍스트 간의 간격 */
             vertical-align: middle; /* 아이콘 정렬 */
-            height : 40px;
+            height : 20px;
         }
         .map{
+        	margin-top : 120px;
             width : 95%;
         }
         .place{
             margin-top : -220px;
         }
         h6{
-            padding: 0px 60px;
-            font-size: 35px; 
+            padding: 0px 40px;
+            font-size: 17px; 
             color : #F7A239;
 
         }
         .content {
-            padding: 0px 60px;
+            padding: 0px 40px;
             margin-top : -50px;
-            font-size: 23px;
+            font-size: 15px;
             line-height: 1.6; /* 줄 간격 설정 */
             color: #333;
             word-wrap: break-word; /* 긴 단어 줄바꿈 */
             word-break: break-word; /* 단어가 영역을 벗어나지 않게 */
         }
         .submit-button {
-            width: 580px;
-            padding: 20px;
+            width: 250px;
+            padding: 10px;
             border: none;
-            border-radius: 20px;
+            border-radius: 15px;
             background-color: #fde7cd;
-            font-size: 40px;
+            font-size: 20px;
             cursor: pointer;
             color : #F7A239;
-            margin-top : 400px;
             display : block;
+			margin-top : 150px;    
             margin-left: auto; 
             margin-right: auto; 
             text-align:center;
+            margin-bottom : 100px;
         }
         .sub-button {
             width: 200px;
@@ -127,28 +130,26 @@
     <jsp:include page="../navigation.jsp"/>
 	
     <div class="title-container">
-        <img src="/arrow.back.png" onclick="history.back()">
+        <img style="width:45px; height:45px;" src="../image/arrow.back.png" onclick="history.back()">
     </div>
-    <h1><%=errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></h1>
-    <h7><%=errand.getErrandType() %></h7>
+    <h4><%=errand.getErrandTopic().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></h4>
+    <div class="type"><%=errand.getErrandType() %></div>
     <div class="explanation">
         <div class="explanation-item">
-            <img class="icon" src="/time.png">기한 : <%=errand.getErrandDeadLine() %>
+            <img class="icon" src="../image/time.png">기한 : <%=errand.getErrandDeadLine() %>
         </div>
         <div class="explanation-item">
-            <img class="icon" src="/place.png">장소 : <%=errand.getErrandPlace() %>
+            <img class="icon" src="../image/place.png">장소 : <%=errand.getErrandPlace() %>
         </div>
         <div class="explanation-item">
-            <img class="icon" src="/point.png">활동비 : <%=errand.getErrandFee() %>
+            <img class="icon" src="../image/point.png">활동비 : <%=errand.getErrandFee() %>
         </div>
     </div>
     <div class="place">
-        <img class="map" src="/dongguk.map.png"></div>
-        <img src="/Vector.png">  <!--나중에 정보 받아와서 조정예정 -->
-    </div>
-    <hr style=width:800px;>
+        <img class="map" src="../image/dongguk.map.png"></div><br>
+    <hr style=width:360px;><br><br>
     <div class="detail">
-        <h6>요청 내용</h6>
+        <div class="type">요청 내용</div><br><br><br>
         <div class="content"><%=errand.getErrandContent().replaceAll(" ", "&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>") %></div>
     </div>
     <%
