@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="errand.errandDAO" %>
 <%@ page import="errand.Errand" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="user.User" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
@@ -124,6 +126,19 @@
       color: white; 
       
     }
+    
+    .complete {
+      position : absolute;
+      left : 80%;
+      border: 1px solid #ff7e00;
+      border-radius: 8px;
+      background-color : #ff7e00;
+      padding : 4px 7px;
+      font-size : 12px;
+      font-weight: bold;
+      color: white; 
+      z-index : 1000;
+    }
   </style>
 </head>
 <body>
@@ -170,10 +185,11 @@
         	<div class="points">0 point</div>
         <%
         	} else {
+        	User user = new UserDAO().getUser(userID);
         %>
         	<div class=logout onclick="window.location.href='<%= request.getContextPath() %>/login/logoutAction.jsp'">로그아웃</div>
         	<div class="name"><%= userID %> 님</div>
-        	<div class="points">10000 point</div> 
+        	<div class="points"><%= user.getUserPoint() %> point</div> 
         <%
         	}
         %>

@@ -7,6 +7,7 @@ public class User {
 	private String userPhoneNumber;
 	private String userBirthday;
 	private String userGender;
+	private int userPoint;
 	public String getUserID() {
 		return userID;
 	}
@@ -43,4 +44,11 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public int getUserPoint() {
+		return userPoint;
+	}
+	public void setUserPoint(int userPoint) {
+		this.userPoint = userPoint;
+	}
+	
 }
