@@ -3,11 +3,10 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="errand.Errand" %>
 <%@ page import="errand.errandDAO" %>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head> 
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main-plus</title>
     <style>

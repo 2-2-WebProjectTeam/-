@@ -52,7 +52,7 @@ public class UserDAO {
 	
 	public int join(User user)
 	{
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -61,6 +61,7 @@ public class UserDAO {
 			pstmt.setString(4, user.getUserPhoneNumber());
 			pstmt.setString(5, user.getUserBirthday());
 			pstmt.setString(6, user.getUserGender());
+			pstmt.setInt(7, 10000);
 			return pstmt.executeUpdate();
 		}catch(Exception e)
 		{
@@ -69,6 +70,29 @@ public class UserDAO {
 		return -1;// 데이터베이스 오류
 	}
 	
+	public User getUser(String userID) {
+		String SQL="SELECT * FROM user WHERE userID=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				User user=new User();
+				user.setUserID(rs.getString(1));
+				user.setUserPassword(rs.getString(2));
+				user.setUserName(rs.getString(3));
+				user.setUserPhoneNumber(rs.getString(4));
+				user.setUserBirthday(rs.getString(5));
+				user.setUserGender(rs.getString(6));
+				user.setUserPoint(rs.getInt(7));
+				return user;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
 	public String getPassword(String userPhoneNumber) {
 		String SQL="SELECT userPassword FROM user WHERE userPhoneNumber=?";
 		try {
@@ -83,4 +107,21 @@ public class UserDAO {
 		}
 		return null;
 	}
+
+	
+	public int addpoint(int point, String userID) {
+		String SQL="UPDATE user SET userPoint = ? WHERE userID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setInt(1,  point);
+			pstmt.setString(2,  userID);
+			return pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
+
 }

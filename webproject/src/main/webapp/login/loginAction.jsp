@@ -30,6 +30,7 @@
 
 		if(result == 1) {
 			session.setAttribute("userID", user.getUserID());
+			session.setMaxInactiveInterval(1800);
 			script.println("<script>");
 			script.println("alert('로그인 성공');");
 			script.println("window.location.href='" + request.getContextPath() + "/mypage/mypage.jsp';");
